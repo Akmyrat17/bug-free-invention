@@ -57,3 +57,32 @@ npm run clients
 ```bash
 npm run dev-cluster
 ```
+
+## 📂 File Descriptions
+
+Here's a breakdown of the key files in this project:
+
+**server.js**  
+The main server application. This file sets up the Express HTTP server, handles WebSocket connections, manages client handshakes, assigns tasks to connected clients, and receives processed results. It coordinates the overall distributed process.
+
+**client.js**  
+The client application. Each instance of this script connects to the server via WebSocket, registers itself, requests audio chunks, performs the necessary audio processing (inverting samples), and submits the processed results back to the server. It also handles reconnection logic.
+
+**task-manager.js**  
+This module encapsulates the core business logic for task management. It's responsible for:
+
+- Generating the large `test.raw` dummy audio file.
+- Dividing the audio file into smaller tasks (chunks).
+- Managing the state of each task (pending, assigned, done).
+- Providing the next available task to clients.
+- Accepting and validating processed results from clients.
+- Re-queueing tasks if clients become unresponsive.
+- Orchestrating the finalization process: combining all processed chunks, reversing the entire audio stream, encrypting it, and saving the `result.raw` file along with the encryption keys (`encryption_key.bin`, `encryption_iv.bin`).
+
+**generated_data/**  
+A directory created by the `task-manager.js` module. It stores all the large, generated files to keep the main project directory clean:
+
+- `test.raw`: The initial large dummy audio file.
+- `result.raw`: The final combined, reversed, and AES-256-CBC encrypted audio output.
+- `encryption_key.bin`: The binary file containing the AES encryption key.
+- `encryption_iv.bin`: The binary file containing the AES Initialization Vector (IV).
