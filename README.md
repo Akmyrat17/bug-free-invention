@@ -86,3 +86,6 @@ A directory created by the `task-manager.js` module. It stores all the large, ge
 - `result.raw`: The final combined, reversed, and AES-256-CBC encrypted audio output.
 - `encryption_key.bin`: The binary file containing the AES encryption key.
 - `encryption_iv.bin`: The binary file containing the AES Initialization Vector (IV).
+
+**client_logs/**  
+A directory where each client's logs are stored. Each of the five clients writes its execution logs (e.g., connection status, task progress, and errors) to a separate file inside this folder for debugging and traceability.
